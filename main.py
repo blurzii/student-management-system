@@ -32,7 +32,7 @@ class MainWindow(QMainWindow):
 
         about_action = QAction("About", self)
         help_menu_item.addAction(about_action)
-        # about_action.setMenuRole(QAction.MenuRole.NoRole)
+        
         about_action.triggered.connect(self.about)
 
         search_action = QAction(QIcon("icons/search.png"), "Search", self)
@@ -45,7 +45,7 @@ class MainWindow(QMainWindow):
         self.table.verticalHeader().setVisible(False)
         self.setCentralWidget(self.table)
 
-        # Create toolbar and add toolbar elements
+        
         toolbar = QToolBar()
         toolbar.setMovable(True)
         self.addToolBar(toolbar)
@@ -53,11 +53,11 @@ class MainWindow(QMainWindow):
         toolbar.addAction(add_student_action)
         toolbar.addAction(search_action)
 
-        # Create status bar and add status bar elements
+        
         self.statusbar = QStatusBar()
         self.setStatusBar(self.statusbar)
 
-        # Detect a cell click
+        
         self.table.cellClicked.connect(self.cell_clicked)
 
     def cell_clicked(self):
@@ -125,19 +125,19 @@ class EditDialog(QDialog):
         self.setFixedHeight(300)
 
         layout = QVBoxLayout()
-        # Get student name from selected row
+        
         index = main_window.table.currentRow()
         student_name = main_window.table.item(index, 1).text()
 
-        # Get id from selected row
+        
         self.student_id = main_window.table.item(index, 0).text()
 
-        # Add student name widget
+        
         self.student_name = QLineEdit(student_name)
         self.student_name.setPlaceholderText("Name")
         layout.addWidget(self.student_name)
 
-        # Add combo box of courses
+        
         course_name = main_window.table.item(index, 2).text()
         self.course_name = QComboBox()
         courses = ["Biology", "Math", "Astronomy", "Physics"]
@@ -145,13 +145,13 @@ class EditDialog(QDialog):
         self.course_name.setCurrentText(course_name)
         layout.addWidget(self.course_name)
 
-        # Add mobile widget
+        
         mobile = main_window.table.item(index, 3).text()
         self.mobile = QLineEdit(mobile)
         self.mobile.setPlaceholderText("Mobile")
         layout.addWidget(self.mobile)
 
-        # Add a submit button
+        
         button = QPushButton("Update")
         button.clicked.connect(self.update_student)
         layout.addWidget(button)
@@ -169,7 +169,7 @@ class EditDialog(QDialog):
         connection.commit()
         cursor.close()
         connection.close()
-        # Refresh a table
+        
         main_window.load_data()
 
 
@@ -192,7 +192,7 @@ class DeleteDialog(QDialog):
         no.clicked.connect(lambda func: self.close())
 
     def delete_student(self):
-        # Get id from selected row
+        
         index = main_window.table.currentRow()
         student_id = main_window.table.item(index, 0).text()
 
@@ -221,23 +221,23 @@ class InsertDialog(QDialog):
 
         layout = QVBoxLayout()
 
-        # Add student name widget
+       
         self.student_name = QLineEdit()
         self.student_name.setPlaceholderText("Name")
         layout.addWidget(self.student_name)
 
-        # Add courses
+        
         self.course_name = QComboBox()
         courses = ["Biology", "Math", "Astronomy", "Physics"]
         self.course_name.addItems(courses)
         layout.addWidget(self.course_name)
 
-        # Add mobile widget
+        
         self.mobile = QLineEdit()
         self.mobile.setPlaceholderText("Mobile")
         layout.addWidget(self.mobile)
 
-        # Add button
+       
         button = QPushButton("Register")
         button.clicked.connect(self.add_student)
         layout.addWidget(button)
@@ -261,18 +261,18 @@ class InsertDialog(QDialog):
 class SearchDialog(QDialog):
     def __init__(self):
         super().__init__()
-        # Set window title and size
+        
         self.setWindowTitle("Search Student")
         self.setFixedWidth(300)
         self.setFixedHeight(300)
 
-        # Create layout and input widget
+        
         layout = QVBoxLayout()
         self.student_name = QLineEdit()
         self.student_name.setPlaceholderText("Name")
         layout.addWidget(self.student_name)
 
-        # Create button
+        
         button = QPushButton("Search")
         button.clicked.connect(self.search)
         layout.addWidget(button)
